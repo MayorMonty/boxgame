@@ -41,10 +41,10 @@ var canvas, context;
 function gameOver() {
   state.over = true;
 
-  context.font = "48px sans-serif";
+  context.font = "48px serif";
   context.textAlign = "center";
   context.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
-  context.font = "18px sans-serif";
+  context.font = "18px serif";
   context.fillText("Press Space", canvas.width / 2, canvas.height / 2 + 48);
 }
 
@@ -194,7 +194,7 @@ function render() {
   });
 
   if (!game.over) {
-    context.font = "18pt sans-serif";
+    context.font = "18pt serif";
     context.fillText(state.score, 40, 40);
   }
 }
