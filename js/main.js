@@ -111,7 +111,7 @@ function updateState() {
   }
 
   if (isPressing("ArrowUp") && state.rays.length < 30 && !state.ray.countdown) {
-    state.ray.countdown = 40;
+    state.ray.countdown = 10;
     state.rays.push({
       x: state.player.x + state.player.width / 2 - state.ray.width / 2,
       y: canvas.height - 100,
