@@ -52,8 +52,8 @@ function init() {
   canvas = document.querySelector("canvas#game");
   context = canvas.getContext("2d");
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight;
 
   state.player.x = canvas.width / 2 - state.player.width / 2;
 
@@ -94,8 +94,8 @@ function step() {
 }
 
 function updateState() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight;
 
   state.player.y = canvas.height - 100;
 
