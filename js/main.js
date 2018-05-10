@@ -58,7 +58,7 @@ function init() {
 }
 
 setTimeout(function boxSpawn() {
-  if (game.over) return;
+  if (state.over) return;
   let box = {
     x:
       state.player.x +
@@ -158,6 +158,8 @@ function render() {
       box.y += box.speedy;
       box.x += box.speedx;
     }
+
+    box.speedx = (state.player.x - box.x) / 200;
 
     if (box.collide > 0) box.collide--;
 
