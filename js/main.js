@@ -1,4 +1,4 @@
-let state = {
+var state = {
   player: {
     x: 0,
     width: 40,
@@ -25,7 +25,7 @@ let state = {
   score: 0
 };
 
-let start = Date.now();
+var start = Date.now();
 
 /**
  * Multipler used to modify game dificulty.
@@ -35,7 +35,7 @@ function gameProgression() {
   return 1 + (Date.now() - start) / (60 * 1000);
 }
 
-let canvas, context;
+var canvas, context;
 
 // Lifecycle Methods
 function gameOver() {
@@ -52,6 +52,11 @@ function init() {
   canvas = document.querySelector("canvas#game");
   context = canvas.getContext("2d");
 
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  state.player.x = canvas.width / 2 - state.player.width / 2;
+
   canvas.focus();
 
   requestAnimationFrame(step);
@@ -59,17 +64,19 @@ function init() {
 
 setTimeout(function boxSpawn() {
   if (!state.over && state.running) {
-    let box = {
-      x:
-        state.player.x +
-        state.player.width / 2 -
-        state.box.width / 2 +
-        (Math.random() - 0.5) * canvas.width * 1 / 3,
+    var box = {
+      x: Math.random() * (canvas.width * 1 / 3) + canvas.width * 1 / 3,
       y: 0,
       ...state.box
     };
     box.speedx = (state.player.x - box.x) / 200;
     box.speedy = Math.min((state.player.x - box.y) / 200, 3.3);
+
+    box.id = `box${performance.now()}`;
+
+    if (box.x < 3 * box.width) {
+      box.speedx = 3;
+    }
 
     state.boxes.push(box);
 
@@ -104,10 +111,11 @@ function updateState() {
   }
 
   if (isPressing("ArrowUp") && state.rays.length < 30 && !state.ray.countdown) {
-    state.ray.countdown = 10;
+    state.ray.countdown = 40;
     state.rays.push({
       x: state.player.x + state.player.width / 2 - state.ray.width / 2,
       y: canvas.height - 100,
+      id: `ray${performance.now()}`,
       ...state.ray
     });
   }
@@ -141,7 +149,7 @@ function render() {
   state.rays.forEach((ray, index) => {
     if (!state.over) ray.y -= ray.speed;
 
-    let collision = state.boxes.findIndex(box => colliding(ray, box));
+    var collision = state.boxes.findIndex(box => colliding(ray, box));
     if (collision > -1) {
       state.rays.splice(index, 1);
       state.boxes.splice(collision, 1);
@@ -161,6 +169,7 @@ function render() {
     }
 
     box.speedx = (state.player.x - box.x) / 200;
+    box.speedy = Math.min((state.player.x - box.y) / 200, 6);
 
     if (box.collide > 0) box.collide--;
 
@@ -169,14 +178,12 @@ function render() {
 
     if (colliding(box, state.player)) gameOver();
     if (box.y > canvas.height) gameOver();
-    let collision = state.boxes.find(bx => colliding(bx, box));
+    var collision = state.boxes.find(bx => colliding(bx, box));
     if (collision) {
       box.collide = 10;
       colliding.collide = 10;
-      box.speedx = -box.speedx;
-      box.speedy = -box.speedy;
-      collision.speedx = -collision.speedx;
-      collision.speedy = -collision.speedy;
+      box.speedx = box.speedx * 3;
+      collision.speedx = -collision.speedx * 3;
     }
 
     context.fillRect(box.x, box.y, box.width, box.height);
@@ -217,12 +224,33 @@ window.addEventListener("keydown", keydown);
 window.addEventListener("keyup", keyup);
 window.addEventListener("blur", () => (state.keys.length = 0));
 
+window.addEventListener("touchstart", event => {
+  var touch = event.changedTouches[0];
+
+  if (touch.pageX > canvas.width / 2) {
+    keydown({ code: "ArrowRight" });
+  } else {
+    keydown({ code: "ArrowLeft" });
+  }
+});
+
+window.addEventListener("touchend", event => {
+  var touch = event.changedTouches[0];
+
+  if (touch.pageX > canvas.width / 2) {
+    keyup({ code: "ArrowRight" });
+  } else {
+    keyup({ code: "ArrowLeft" });
+  }
+});
+
 // Collision Detection
 function colliding(a, b) {
   return (
     a.x < b.x + b.width &&
     a.x + a.width > b.x &&
     a.y < b.y + b.height &&
-    a.height + a.y > b.y
+    a.height + a.y > b.y &&
+    a.id != b.id
   );
 }
