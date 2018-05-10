@@ -14,8 +14,7 @@ let state = {
   rays: [],
   box: {
     width: 45,
-    height: 33,
-    speed: 3
+    height: 33
   },
   boxes: []
 };
@@ -43,7 +42,7 @@ function init() {
 }
 
 setTimeout(function boxSpawn() {
-  state.boxes.push({
+  let box = {
     x:
       state.player.position +
       state.player.width / 2 -
@@ -51,7 +50,12 @@ setTimeout(function boxSpawn() {
       (Math.random() - 0.5) * canvas.width * 1 / 3,
     y: 0,
     ...state.box
-  });
+  };
+  box.speedx = (state.player.position - box.x) / 200;
+  box.speedy = (state.player.position - box.y) / 200;
+
+  state.boxes.push(box);
+
   console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
   setTimeout(boxSpawn, 3000 / gameProgression());
 }, 1000 / gameProgression());
@@ -117,7 +121,8 @@ function step() {
 
   // Boxes
   state.boxes.forEach((box, index) => {
-    box.y += box.speed;
+    box.y += box.speedy;
+    box.x += box.speedx;
 
     context.fillRect(box.x, box.y, box.width, box.height);
   });
