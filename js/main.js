@@ -58,22 +58,23 @@ function init() {
 }
 
 setTimeout(function boxSpawn() {
-  if (state.over) return;
-  let box = {
-    x:
-      state.player.x +
-      state.player.width / 2 -
-      state.box.width / 2 +
-      (Math.random() - 0.5) * canvas.width * 1 / 3,
-    y: 0,
-    ...state.box
-  };
-  box.speedx = (state.player.x - box.x) / 200;
-  box.speedy = Math.min((state.player.x - box.y) / 200, 3.3);
+  if (!state.over && state.running) {
+    let box = {
+      x:
+        state.player.x +
+        state.player.width / 2 -
+        state.box.width / 2 +
+        (Math.random() - 0.5) * canvas.width * 1 / 3,
+      y: 0,
+      ...state.box
+    };
+    box.speedx = (state.player.x - box.x) / 200;
+    box.speedy = Math.min((state.player.x - box.y) / 200, 3.3);
 
-  state.boxes.push(box);
+    state.boxes.push(box);
 
-  console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
+    console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
+  }
   setTimeout(boxSpawn, 1800 / gameProgression());
 }, 1000 / gameProgression());
 
