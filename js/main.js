@@ -20,6 +20,16 @@ let state = {
   boxes: []
 };
 
+let start = Date.now();
+
+/**
+ * Multipler used to modify game dificulty.
+ * The game will increase 100% in difficulty every 2 minutes
+ */
+function gameProgression() {
+  return 1 + (Date.now() - start) / (2 * 60 * 1000);
+}
+
 let canvas, context;
 
 // Lifecycle Methods
@@ -32,13 +42,19 @@ function init() {
   requestAnimationFrame(step);
 }
 
-setInterval(() => {
-  state.rays.push({
-    x: state.player.position + state.player.width / 2 - state.box.width / 2,
+setTimeout(function boxSpawn() {
+  state.boxes.push({
+    x:
+      state.player.position +
+      state.player.width / 2 -
+      state.box.width / 2 +
+      (Math.random() - 0.5) * canvas.width * 1 / 3,
     y: 0,
     ...state.box
   });
-}, 3000);
+  console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
+  setTimeout(boxSpawn, 3000 / gameProgression());
+}, 1000 / gameProgression());
 
 function step() {
   canvas.width = window.innerWidth;
