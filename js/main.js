@@ -74,7 +74,7 @@ setTimeout(function boxSpawn() {
   state.boxes.push(box);
 
   console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
-  setTimeout(boxSpawn, 2500 / gameProgression());
+  setTimeout(boxSpawn, 1800 / gameProgression());
 }, 1000 / gameProgression());
 
 function step() {
