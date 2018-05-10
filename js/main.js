@@ -16,21 +16,23 @@ let state = {
   rays: [],
   box: {
     width: 45,
-    height: 33
+    height: 33,
+    collide: 0
   },
   boxes: [],
   running: true,
-  over: false
+  over: false,
+  score: 0
 };
 
 let start = Date.now();
 
 /**
  * Multipler used to modify game dificulty.
- * The game will increase 100% in difficulty every 2 minutes
+ * The game will increase 100% in difficulty every minute
  */
 function gameProgression() {
-  return 1 + (Date.now() - start) / (2 * 60 * 1000);
+  return 1 + (Date.now() - start) / (60 * 1000);
 }
 
 let canvas, context;
@@ -56,6 +58,7 @@ function init() {
 }
 
 setTimeout(function boxSpawn() {
+  if (game.over) return;
   let box = {
     x:
       state.player.x +
@@ -71,7 +74,7 @@ setTimeout(function boxSpawn() {
   state.boxes.push(box);
 
   console.log(`Spawned box, next spawn in ${3000 / gameProgression()}ms`);
-  if (!state.over) setTimeout(boxSpawn, 2500 / gameProgression());
+  setTimeout(boxSpawn, 2500 / gameProgression());
 }, 1000 / gameProgression());
 
 function step() {
@@ -120,6 +123,8 @@ function updateState() {
 
   if (state.player.x < 0) state.player.x = canvas.width;
   if (state.player.x > canvas.width) state.player.x = 0;
+
+  state.score += 1;
 }
 
 function render() {
@@ -139,6 +144,7 @@ function render() {
     if (collision > -1) {
       state.rays.splice(index, 1);
       state.boxes.splice(collision, 1);
+      state.score += 500;
     }
 
     context.fillRect(ray.x, ray.y, ray.width, ray.height);
@@ -153,14 +159,30 @@ function render() {
       box.x += box.speedx;
     }
 
+    if (box.collide > 0) box.collide--;
+
     if (box.x < 0) box.x = canvas.width;
     if (box.x > canvas.width) box.x = 0;
 
     if (colliding(box, state.player)) gameOver();
     if (box.y > canvas.height) gameOver();
+    let collision = state.boxes.find(bx => colliding(bx, box));
+    if (collision) {
+      box.collide = 10;
+      colliding.collide = 10;
+      box.speedx = -box.speedx;
+      box.speedy = -box.speedy;
+      collision.speedx = -collision.speedx;
+      collision.speedy = -collision.speedy;
+    }
 
     context.fillRect(box.x, box.y, box.width, box.height);
   });
+
+  if (!game.over) {
+    context.font = "18pt sans-serif";
+    context.fillText(state.score, 40, 40);
+  }
 }
 
 window.addEventListener("DOMContentLoaded", init);
@@ -172,6 +194,9 @@ function keydown(e) {
       state.boxes = [];
       state.rays = [];
       start = Date.now();
+      state.over = false;
+      state.running = true;
+      state.score = 0;
     } else {
       state.running = !state.running;
     }
