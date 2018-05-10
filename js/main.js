@@ -171,6 +171,10 @@ function render() {
     box.speedx = (state.player.x - box.x) / 200;
     box.speedy = Math.min((state.player.x - box.y) / 200, 6);
 
+    if (Math.abs(box.x - state.player.x) < 50) {
+      box.speedy = 4;
+    }
+
     if (box.collide > 0) box.collide--;
 
     if (box.x < 0) box.x = canvas.width;
