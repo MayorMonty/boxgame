@@ -97,7 +97,7 @@ function updateState() {
   canvas.width = document.documentElement.clientWidth;
   canvas.height = document.documentElement.clientHeight;
 
-  state.player.y = canvas.height - 100;
+  state.player.y = canvas.height - Math.max(gameProgression() * 100, 0 );
 
   // Update State
   if (isPressing("ArrowRight")) {
@@ -114,10 +114,11 @@ function updateState() {
     state.ray.countdown = 10;
     state.rays.push({
       x: state.player.x + state.player.width / 2 - state.ray.width / 2,
-      y: canvas.height - 100,
+      y: state.player.y,
       id: `ray${performance.now()}`,
       ...state.ray
     });
+    state.score--;
   }
 
   if (state.ray.countdown > 0) state.ray.countdown--;
