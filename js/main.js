@@ -8,9 +8,16 @@ let state = {
   ray: {
     width: 3,
     height: 10,
-    speed: 7
+    speed: 7,
+    countdown: 0
   },
-  rays: []
+  rays: [],
+  box: {
+    width: 45,
+    height: 33,
+    speed: 3
+  },
+  boxes: []
 };
 
 let canvas, context;
@@ -24,6 +31,14 @@ function init() {
 
   requestAnimationFrame(step);
 }
+
+setInterval(() => {
+  state.rays.push({
+    x: state.player.position + state.player.width / 2 - state.box.width / 2,
+    y: 0,
+    ...state.box
+  });
+}, 3000);
 
 function step() {
   canvas.width = window.innerWidth;
@@ -40,13 +55,16 @@ function step() {
     state.player.speed >= -25 ? (state.player.speed -= 3) : null;
   }
 
-  if (isPressing("ArrowUp") && state.rays.length < 30) {
+  if (isPressing("ArrowUp") && state.rays.length < 30 && !state.ray.countdown) {
+    state.ray.countdown = 10;
     state.rays.push({
       x: state.player.position + state.player.width / 2 - state.ray.width / 2,
       y: canvas.height - 100,
       ...state.ray
     });
   }
+
+  if (state.ray.countdown > 0) state.ray.countdown--;
 
   context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -79,6 +97,13 @@ function step() {
     context.fillRect(ray.x, ray.y, ray.width, ray.height);
 
     if (ray.y < 0) state.rays.splice(index, 1);
+  });
+
+  // Boxes
+  state.boxes.forEach((box, index) => {
+    box.y += box.speed;
+
+    context.fillRect(box.x, box.y, box.width, box.height);
   });
 
   requestAnimationFrame(step);
