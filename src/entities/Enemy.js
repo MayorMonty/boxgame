@@ -7,10 +7,13 @@ export class Enemy extends Box {
       deepmerge(
         {
           size: {
-            width: 25,
-            height: 25
+            width: 45,
+            height: 45
           },
-          type: "enemy"
+          health: 1,
+          type: "enemy",
+          control: "Enemy",
+          collisions: []
         },
         components
       )
