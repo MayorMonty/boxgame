@@ -4,3 +4,4 @@ export { Entity } from "./Entity";
 export { Box } from "./Box";
 export { Player } from "./Player";
 export { Ray } from "./Ray";
+export { Enemy } from "./Enemy";
