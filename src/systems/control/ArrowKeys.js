@@ -7,14 +7,14 @@ const ArrowKeyController = new EntitySystem(({ entity, canvas }) => {
 
   if (Keyboard.state.has("ArrowRight")) {
     entity.velocity.x < 0 ? (entity.velocity.x = 0) : null;
-    entity.velocity.x <= 10
+    entity.velocity.x <= 25
       ? (entity.velocity.x += entity.velocity.scaleX)
       : null;
   }
 
   if (Keyboard.state.has("ArrowLeft")) {
     entity.velocity.x > 0 ? (entity.velocity.x = 0) : null;
-    entity.velocity.x >= -10
+    entity.velocity.x >= -25
       ? (entity.velocity.x -= entity.velocity.scaleX)
       : null;
   }
