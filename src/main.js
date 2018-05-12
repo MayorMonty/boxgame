@@ -10,7 +10,8 @@ function init() {
   canvas.focus();
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  Player.position.y = document.documentElement.clientHeight - 200;
+  Player.position.y = document.documentElement.clientHeight - 100;
+  Player.position.x = document.documentElement.clientWidth / 2;
 
   // Start the game tick
   requestAnimationFrame(tick);
@@ -21,7 +22,6 @@ function tick() {
   canvas.height = document.documentElement.clientHeight;
 
   System.tick({ canvas, context });
-  console.log(Player.velocity.x, Player.position.x);
 
   requestAnimationFrame(tick);
 }
