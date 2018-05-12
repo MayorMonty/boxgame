@@ -15,7 +15,8 @@ export class Ray extends Box {
             scaleX: 0,
             frictionY: 0,
             y: -3
-          }
+          },
+          type: "ray"
         },
         components
       )
