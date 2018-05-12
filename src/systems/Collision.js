@@ -1,4 +1,5 @@
 import { EntitySystem } from "./EntitySystem";
+import { Ray, Entity, Enemy } from "../entities";
 
 function colliding(a, b) {
   return (
@@ -10,8 +11,12 @@ function colliding(a, b) {
   );
 }
 
-const Collusion = new EntitySystem(({ entity, list, canvas }) => {
-  let collisions = list.filter(b => colliding(entity, b));
+const Collusion = new EntitySystem(({ entity, index, list, canvas }) => {
+  let collisions = Entity.list.filter(b => colliding(entity, b));
 
-  for (let i = 0; i < collisions.length; i++) {}
+  // Since rays don't have AI, we'll handle their collision logic here
+  if (collisions.length > 0 && entity.type == "ray") Entity.delete(index);
+
+  // Otherwise, pass it of to the controllers
+  entity.collisions = collisions;
 });
