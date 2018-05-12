@@ -8,3 +8,7 @@ export class Entity {
 }
 
 Entity.list = [];
+
+Entity.delete = function(index) {
+  Entity.list.splice(index, 1);
+};
