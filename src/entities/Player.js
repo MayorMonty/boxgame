@@ -5,7 +5,7 @@ const Player = new Box({
     width: 40
   },
   velocity: {
-    scaleX: 2
+    scaleX: 1.7
   },
   control: "ArrowKey",
   type: "player"
