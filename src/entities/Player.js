@@ -8,13 +8,7 @@ const Player = new Box({
     scaleX: 2
   },
   control: "ArrowKey",
-  text: {
-    content() {
-      return [...Keyboard.state].join(", ");
-    },
-    color: "white",
-    font: "18pt sans-serif"
-  }
+  type: "player"
 });
 
 export { Player };
