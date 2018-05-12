@@ -1,5 +1,6 @@
 export class Entity {
   children = [];
+  collisions = [];
   constructor(components) {
     this.id = `${Math.random() * performance.now()}`;
     Object.assign(this, components);

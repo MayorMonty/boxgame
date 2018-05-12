@@ -12,8 +12,7 @@ export class Enemy extends Box {
           },
           health: 1,
           type: "enemy",
-          control: "Enemy",
-          collisions: []
+          control: "Enemy"
         },
         components
       )
