@@ -9,10 +9,8 @@ document.addEventListener("keydown", e => {
   events.emit(e.code);
 });
 
-document.addEventListener("keyup", e => {
-  state.delete(e.code);
-  events.emit(e.code);
-});
+document.addEventListener("keyup", e => state.delete(e.code));
+window.addEventListener("blur", () => state.clear());
 
 const Keyboard = {
   state,
