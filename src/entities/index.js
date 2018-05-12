@@ -1,4 +1,6 @@
+export { Entity } from "./Entity";
+
 // Registry of Entity Types
 export { Box } from "./Box";
 export { Player } from "./Player";
-export { Entity } from "./Entity";
+export { Ray } from "./Ray";

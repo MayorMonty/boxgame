@@ -1,15 +1,23 @@
 import { Box } from "./Box";
+import deepmerge from "deepmerge";
 
-const Ray = new Box({
-  size: {
-    width: 2,
-    height: 40
-  },
-  velocity: {
-    scaleY: 5,
-    scaleX: 0,
-    frictionY: 0
+export class Ray extends Box {
+  constructor(components) {
+    super(
+      deepmerge(
+        {
+          size: {
+            width: 2,
+            height: 10
+          },
+          velocity: {
+            scaleY: 5,
+            scaleX: 0,
+            frictionY: 0
+          }
+        },
+        components
+      )
+    );
   }
-});
-
-export { Ray };
+}

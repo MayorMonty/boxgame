@@ -19,7 +19,7 @@ const ArrowKeyController = new EntitySystem(({ entity, canvas }) => {
       : null;
   }
 
-  if (state.has("ArrowUp")) {
+  if (Keyboard.state.has("ArrowUp")) {
     entity.children.push(
       new Ray({
         position: entity.position
