@@ -19,11 +19,14 @@ const ArrowKeyController = new EntitySystem(({ entity, canvas }) => {
       : null;
   }
 
-  if (Keyboard.state.has("ArrowUp")) {
-    entity.children.push(
-      new Ray({
-        position: entity.position
-      })
-    );
+  if (Keyboard.state.has("ArrowUp") && !entity.rayCountdown) {
+    let ray = new Ray({
+      position: { y: entity.position.y }
+    });
+    ray.position.x =
+      entity.position.x + entity.size.width / 2 - ray.size.width / 2;
+    entity.rayCountdown = 6;
   }
+
+  if (entity.rayCountdown > 0) entity.rayCountdown--;
 });
