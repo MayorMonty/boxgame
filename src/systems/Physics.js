@@ -1,4 +1,4 @@
-import { EntitySystem } from "../ecs";
+import { EntitySystem } from "./EntitySystem";
 
 const Physics = new EntitySystem(({ entity }) => {
   // Apply the velocity

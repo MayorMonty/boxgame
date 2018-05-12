@@ -1,12 +1,3 @@
-export class Entity {
-  constructor(components) {
-    Object.assign(this, components);
-    Entity.list.push(this);
-  }
-}
-
-Entity.list = [];
-
 export class System {
   constructor(action) {
     if (typeof action != "function")
@@ -16,12 +7,6 @@ export class System {
   }
   tick(passed) {
     return this.action.bind(this)(passed);
-  }
-}
-
-export class EntitySystem extends System {
-  constructor(action) {
-    super(passed => Entity.list.map(entity => action({ entity, ...passed })));
   }
 }
 

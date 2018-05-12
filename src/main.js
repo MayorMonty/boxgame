@@ -1,5 +1,4 @@
-import { Entity, System } from "./ecs";
-import { Keyboard } from "./systems";
+import { System, Keyboard } from "./systems";
 import { Box, Player } from "./entities";
 
 let canvas, context;

@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { EntitySystem } from "../ecs";
+import { EntitySystem } from "./EntitySystem";
 
 const state = new Set();
 const events = new EventEmitter();

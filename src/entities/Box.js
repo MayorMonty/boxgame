@@ -1,4 +1,4 @@
-import { Entity } from "../ecs";
+import { Entity } from "./Entity";
 import deepmerge from "deepmerge";
 
 export class Box extends Entity {

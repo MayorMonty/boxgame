@@ -1,4 +1,4 @@
-import { EntitySystem } from "../ecs";
+import { EntitySystem } from "./EntitySystem";
 
 const Render = new EntitySystem(({ entity, context }) => {
   context.fillStyle = entity.render.fillStyle || "black";
