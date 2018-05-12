@@ -7,13 +7,14 @@ export class Ray extends Box {
       deepmerge(
         {
           size: {
-            width: 2,
+            width: 3,
             height: 10
           },
           velocity: {
             scaleY: 5,
             scaleX: 0,
-            frictionY: 0
+            frictionY: 0,
+            y: -3
           }
         },
         components
