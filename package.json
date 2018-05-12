@@ -1,0 +1,18 @@
+{
+  "name": "boxgame",
+  "version": "0.0.0",
+  "description": "A simple game about boxes",
+  "main": "index.html",
+  "repository": "git@github.com:MayorMonty/boxgame.git",
+  "author": "MayorMonty <artificalchamber@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "deepmerge": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
+}
