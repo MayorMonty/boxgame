@@ -1,5 +1,5 @@
 import { System } from "../systems";
-import { Enemy, Player } from "../entities";
+import { Enemy, Player, Entity } from "../entities";
 
 const Spawner = new System(({ canvas }) => {
   if (Math.random() < 1 / 50) {

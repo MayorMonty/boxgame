@@ -5,6 +5,19 @@ import { Ray } from "../../entities";
 const ArrowKeyController = new EntitySystem(({ entity, canvas }) => {
   if (entity.control !== "ArrowKey") return;
 
+  Keyboard.touches.forEach(touch => {
+    let dist = (touch.clientX - entity.position.x) / 30;
+    if (Math.abs(dist) > 100) dist = 0;
+
+    if (touch.clientY < canvas.height / 1.5) {
+      Keyboard.state.add("ArrowUp");
+    } else {
+      Keyboard.state.delete("ArrowUp");
+    }
+
+    entity.velocity.x = dist;
+  });
+
   if (Keyboard.state.has("ArrowRight")) {
     entity.velocity.x < 0 ? (entity.velocity.x = 0) : null;
     entity.velocity.x <= 25
